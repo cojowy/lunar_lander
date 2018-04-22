@@ -2,3 +2,8 @@
 frames/
 *.mod
 *.pkl
+.ipynb_checkpoints/
+*.h5f
+recording/
+rl/__pycache__/
+rl/agents/__pycache__/
