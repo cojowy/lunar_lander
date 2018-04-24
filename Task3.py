@@ -52,25 +52,25 @@ print(model.summary())
 #memory
 memory = SequentialMemory(limit=50000, window_length=WINDOW_LENGTH)
 
-# policy = EpsGreedyQPolicy()
-policy = LinearAnnealedPolicy(EpsGreedyQPolicy(), attr='eps', value_max=1., value_min=.1, value_test=.05, nb_steps=1000000)
+policy = EpsGreedyQPolicy()
+#policy = LinearAnnealedPolicy(EpsGreedyQPolicy(), attr='eps', value_max=1., value_min=.1, value_test=.05, nb_steps=1000000)
 
-# dqn = DQNAgent(model=model, 
-#                nb_actions=nb_actions, 
-#                memory=memory, 
-#                nb_steps_warmup=10,
-#                target_model_update=1e-2, 
-#                policy=policy)
-
-dqn = DQNAgent(model=model,
-               nb_actions=nb_actions,
-               policy=policy,
-               memory=memory,
+dqn = DQNAgent(model=model, 
+               nb_actions=nb_actions, 
+               memory=memory, 
                nb_steps_warmup=10,
-               gamma=.99,
-               target_model_update=10000,
-               train_interval=4,
-               delta_clip=1.)
+               target_model_update=1e-2, 
+               policy=policy)
+
+# dqn = DQNAgent(model=model,
+#                nb_actions=nb_actions,
+#                policy=policy,
+#                memory=memory,
+#                nb_steps_warmup=10,
+#                gamma=.99,
+#                target_model_update=10000,
+#                train_interval=4,
+#                delta_clip=1.)
 
 
 # dqn.compile(Adam(lr=1e-3), metrics=['mae'])
