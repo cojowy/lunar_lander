@@ -367,31 +367,30 @@ class LunarLanderContinuous(LunarLander):
     continuous = True
 
 if __name__=="__main__":
-	
+	from sklearn.externals import joblib
+    
 	# Load the Lunar Lander environment
 	env = LunarLander()
 	s = env.reset()
 
 	# Load and initialise the contrll model
-	ROWS = 64
-	COLS = 64
-	CHANNELS = 1
-	model = keras.models.load_model("player.mod")
-
-	# Run the game loop
+	model = joblib.load('ml_states_player.pkl')
 	total_reward = 0
 	steps = 0
-	while True:
-
+	t = time.time
+	t1=t()
+	while True:        
 	    # Get the model to make a prediction
-	    a = model.predict_classes(s)
+	    a = model.predict(s.reshape(1,-1))
 	    a = a[0]
 
 	    # Step on the game
 	    s, r, done, info = env.step(a)
 	    env.render()
 	    total_reward += r
+	#    done = t()-t1 > 10
 	    if steps % 20 == 0 or done:
+	#        if done: total_reward=-math.pi;
 	        print(["{:+0.2f}".format(x) for x in s])
 	        print("step {} total_reward {:+0.2f}".format(steps, total_reward))
 	    steps += 1
