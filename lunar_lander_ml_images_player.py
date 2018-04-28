@@ -373,7 +373,7 @@ if __name__=="__main__":
 	ROWS = 64
 	COLS = 64
 	CHANNELS = 1
-	model = keras.models.load_model("images_player.mod")
+	model = keras.models.load_model("ml_images_player.mod")
 	env = LunarLander()
 	for i in range(200):
 	    # Load the Lunar Lander environment
@@ -391,7 +391,7 @@ if __name__=="__main__":
 	        processed_image = cv2.resize(raw_image, (ROWS, COLS), interpolation=cv2.INTER_CUBIC)
 	        processed_image = cv2.cvtColor(processed_image, cv2.COLOR_RGB2GRAY)
 	        processed_image = np.array(processed_image, dtype=np.float)
-	        processed_image = processed_image.reshape((1, CHANNELS, ROWS, COLS))
+	        processed_image = processed_image.reshape((1, CHANNELS*ROWS*COLS))
 	        processed_image = processed_image/255
 
 	        # Get the model to make a prediction
