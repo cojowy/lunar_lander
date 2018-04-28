@@ -368,43 +368,44 @@ class LunarLanderContinuous(LunarLander):
 
 if __name__=="__main__":
 	
-	# Load the Lunar Lander environment
-	env = LunarLander()
-	s = env.reset()
-
+	
 	# Load and initialise the contrll model
 	ROWS = 64
 	COLS = 64
 	CHANNELS = 1
 	model = keras.models.load_model("player.mod")
+	# Load the Lunar Lander environment
+	env = LunarLander()
+	for i in range(200):
+	    s = env.reset()
 
-	# Run the game loop
-	total_reward = 0
-	steps = 0
-	while True:
+	    # Run the game loop
+	    total_reward = 0
+	    steps = 0
+	    while True:
 
-	    # Access the rednered scrnen image
-	    raw_image = env.render(mode='rgb_array')
+	        # Access the rednered scrnen image
+	        raw_image = env.render(mode='rgb_array')
 
-	    # Prepare the image for presentation to the network
-	    processed_image = cv2.resize(raw_image, (ROWS, COLS), interpolation=cv2.INTER_CUBIC)
-	    processed_image = cv2.cvtColor(processed_image, cv2.COLOR_RGB2GRAY)
-	    processed_image = np.array(processed_image, dtype=np.float)
-	    processed_image = processed_image.reshape((1, CHANNELS, ROWS, COLS))
-	    processed_image = processed_image/255
+	        # Prepare the image for presentation to the network
+	        processed_image = cv2.resize(raw_image, (ROWS, COLS), interpolation=cv2.INTER_CUBIC)
+	        processed_image = cv2.cvtColor(processed_image, cv2.COLOR_RGB2GRAY)
+	        processed_image = np.array(processed_image, dtype=np.float)
+	        processed_image = processed_image.reshape((1, CHANNELS, ROWS, COLS))
+	        processed_image = processed_image/255
 
-	    # Get the model to make a prediction
-	    a = model.predict_classes(processed_image)
-	    a = a[0]
+	        # Get the model to make a prediction
+	        a = model.predict_classes(processed_image)
+	        a = a[0]
 
-	    # Step on the game
-	    s, r, done, info = env.step(a)
-	    env.render()
-	    total_reward += r
-	    if steps % 20 == 0 or done:
-	        print(["{:+0.2f}".format(x) for x in s])
-	        print("step {} total_reward {:+0.2f}".format(steps, total_reward))
-	    steps += 1
+	        # Step on the game
+	        s, r, done, info = env.step(a)
+	        env.render()
+	        total_reward += r
+	        if steps % 20 == 0 or done:
+	            print(["{:+0.2f}".format(x) for x in s])
+	            print("step {} total_reward {:+0.2f}".format(steps, total_reward))
+	        steps += 1
 	
 	    		
-	    if done: break
+	        if done: break

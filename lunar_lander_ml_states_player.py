@@ -371,29 +371,32 @@ if __name__=="__main__":
     
 	# Load the Lunar Lander environment
 	env = LunarLander()
-	s = env.reset()
+	for _ in range(200):
+	    s = env.reset()
+	
+	    # Load and initialise the contrll model
+	    model = joblib.load('ml_states_player.pkl')
+	    total_reward = 0
+	    steps = 0
+	    t = time.time
+	    t1=t()
+	    while True:        
+	        # Get the model to make a prediction
+	        a = model.predict(s.reshape(1,-1))
+	        a = a[0]
 
-	# Load and initialise the contrll model
-	model = joblib.load('ml_states_player.pkl')
-	total_reward = 0
-	steps = 0
-	t = time.time
-	t1=t()
-	while True:        
-	    # Get the model to make a prediction
-	    a = model.predict(s.reshape(1,-1))
-	    a = a[0]
-
-	    # Step on the game
-	    s, r, done, info = env.step(a)
-	    env.render()
-	    total_reward += r
-	#    done = t()-t1 > 10
-	    if steps % 20 == 0 or done:
-	#        if done: total_reward=-math.pi;
-	        print(["{:+0.2f}".format(x) for x in s])
-	        print("step {} total_reward {:+0.2f}".format(steps, total_reward))
-	    steps += 1
+	        # Step on the game
+	        s, r, done, info = env.step(a)
+	        env.render()
+	        total_reward += r
+	#        done = t()-t1 > 10
+	        #if steps % 20 == 0 or done:
+	#            if done: total_reward=-math.pi;
+	            #print(["{:+0.2f}".format(x) for x in s])
+	            #print("step {} total_reward {:+0.2f}".format(steps, total_reward))
+	        steps += 1
 	
 	    		
-	    if done: break
+	        if done: 
+	            print(total_reward)
+	            break
