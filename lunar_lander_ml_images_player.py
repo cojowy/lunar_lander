@@ -402,10 +402,9 @@ if __name__=="__main__":
 	        s, r, done, info = env.step(a)
 	        env.render()
 	        total_reward += r
-	        if steps % 20 == 0 or done:
-	            print(["{:+0.2f}".format(x) for x in s])
-	            print("step {} total_reward {:+0.2f}".format(steps, total_reward))
+	        if steps >= 2000  or done:
+	            done = True
+	            print(steps, total_reward)
+	            break
 	        steps += 1
 	
-	    		
-	        if done: break

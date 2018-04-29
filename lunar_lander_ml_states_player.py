@@ -398,5 +398,5 @@ if __name__=="__main__":
 	
 	    		
 	        if done: 
-	            print(total_reward)
+	            print(total_reward, steps)
 	            break
