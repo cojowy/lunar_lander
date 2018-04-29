@@ -8,3 +8,4 @@ recording/
 rl/__pycache__/
 rl/agents/__pycache__/
 rus_data/
+*.zip
