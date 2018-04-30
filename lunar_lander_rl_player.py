@@ -60,9 +60,9 @@ dqn = DQNAgent(model=model,
 
 dqn.compile(Adam(lr=.1e-3), metrics=['mse'])
 
-train_step_number=900000
+train_step_number=1200000
 # After training is done, we save the final weights.
-dqn.load_weights('../weights/TESTpoint6eps2mil_weights_'+str(train_step_number)+'_.h5f')
+dqn.load_weights('TESTpoint6eps2mil_weights_'+str(train_step_number)+'_.h5f')
 
 # Redirect stdout to capture test results
 old_stdout = sys.stdout
